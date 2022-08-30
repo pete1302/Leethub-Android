@@ -107,4 +107,18 @@
         app:layout_constraintTop_toBottomOf="@+id/workerButton"
         app:layout_constraintVertical_bias="0.818" />
 
+    <Button
+        android:id="@+id/btChk1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="282dp"
+        android:text="CHK1"
+        app:layout_constraintBottom_toTopOf="@+id/tvWorker"
+        app:layout_constraintEnd_toStartOf="@+id/workerButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/evQid" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

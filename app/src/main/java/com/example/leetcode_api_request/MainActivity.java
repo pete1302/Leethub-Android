@@ -2,6 +2,7 @@ package com.example.leetcode_api_request;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -15,9 +16,12 @@ import androidx.work.WorkManager;
 import java.util.concurrent.TimeUnit;
 
 
+
 public class MainActivity extends AppCompatActivity {
 
 //    public static final String KEY_TASK_DESC = "key_task_desc";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
                                 Data data = workInfo.getOutputData();
 
-
-
 //                                textView.append( + "\n");
                             }
 
@@ -68,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+
+        Button btChk1 = findViewById(R.id.btChk1);
+        btChk1.setOnClickListener(view -> {
+            checkClass.chk();
+        });
 
     }
 }
