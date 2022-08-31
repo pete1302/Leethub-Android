@@ -1,5 +1,6 @@
 package com.example.leetcode_api_request;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,12 +22,16 @@ public class MainActivity extends AppCompatActivity {
 
 //    public static final String KEY_TASK_DESC = "key_task_desc";
 
-
+    public static Context c;
+    public static Context getContext(){
+        return c;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        c = getApplicationContext();
 
 //        Data data = new Data.Builder()
 //                .putString(KEY_TASK_DESC, "Hey I am sending the work data")
