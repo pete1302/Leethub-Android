@@ -14,6 +14,7 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 
@@ -74,6 +75,22 @@ public class MainActivity extends AppCompatActivity {
             checkClass.chk2();
 
         });
+        Button btSave = findViewById(R.id.btSave);
+        btSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkClass chk = new checkClass(MainActivity.this);
+                String userInp = "pete1302";
+                try {
+                    checkClass.chk3(userInp);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
     }
 //    public void chk2(){

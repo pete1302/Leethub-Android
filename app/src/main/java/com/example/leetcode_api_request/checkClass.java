@@ -1,5 +1,6 @@
 package com.example.leetcode_api_request;
 
+import android.os.Looper;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.concurrent.ExecutionException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -15,6 +17,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class checkClass {
+
+    private static final String TAG = "CHK";
 
     public static void testfx() {
         Log.i("TEST", "TESTFX");
@@ -50,18 +54,45 @@ public class checkClass {
     public static void chk2(){
 
         MainActivity activity = (MainActivity) weakRef.get();
-        if( activity ==null || activity.isFinishing()){
+        if( activity == null || activity.isFinishing()){
             return;
         }
-
         Storage sto = new Storage();
         JSONObject jsonData = null;
         for (int i = 0; i < sto.users.size(); i++) {
             Log.i("users- ", sto.users.get(i));
-            asyncReqClass reqtask = new asyncReqClass(activity);
-            reqtask.execute(sto.users.get(i));
+//            asyncReqClass reqtask = new asyncReqClass(activity);
+//            asyncReqClass(activity).exe
+//            reqtask.execute(sto.users.get(i));
+
 
         }
+    }
+
+    public static void chk3(String userName) throws ExecutionException, InterruptedException {
+
+        if( Looper.getMainLooper().getThread() == Thread.currentThread()){
+            Log.e(TAG, "chk3: UIUIUIUIU");
+        }else{
+            Log.e(TAG, "chk3: NOINOINOI");
+        }
+        MainActivity activity = (MainActivity) weakRef.get();
+        if( activity == null || activity.isFinishing()){
+            return;
+        }
+        final String[] resData = {null};
+        Log.i(TAG, "chk3: " + userName);
+//        asyncReqClass reqtask = new asyncReqClass(activity);
+        new asyncReqClass(activity) {
+            @Override
+            public String getRes(String res) {
+                resData[0] = res;
+                return res;
+            }
+        }.execute(userName);
+
+        Log.i(TAG, "chk3: RESPONSE ---->"+ resData[0]);
+
     }
 
 

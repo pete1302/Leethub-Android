@@ -13,11 +13,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class asyncReqClass extends AsyncTask<String , Void , String> {
+public abstract class asyncReqClass extends AsyncTask<String , Void , String> implements callBack{
 
     private WeakReference weakRef;
 
-    public asyncReqClass(MainActivity activity) {
+    asyncReqClass(MainActivity activity) {
         weakRef = new WeakReference<MainActivity>(activity);
     }
 
@@ -144,7 +144,7 @@ public class asyncReqClass extends AsyncTask<String , Void , String> {
         Log.i(TAG, "onPostExecute: ");
         MainActivity activity = (MainActivity) weakRef.get();
         Toast.makeText(activity, "HTTP REQUEST EXECed " + s, Toast.LENGTH_SHORT).show();
-        
+
     }
 
     private static String queryGen(String username, String qid){
