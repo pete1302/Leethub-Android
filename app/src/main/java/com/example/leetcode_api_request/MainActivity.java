@@ -17,7 +17,6 @@ import androidx.work.WorkManager;
 import java.util.concurrent.TimeUnit;
 
 
-
 public class MainActivity extends AppCompatActivity {
 
 //    public static final String KEY_TASK_DESC = "key_task_desc";
@@ -27,22 +26,15 @@ public class MainActivity extends AppCompatActivity {
         return c;
     }
 
+//    private Button btChk1 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         c = getApplicationContext();
 
-//        Data data = new Data.Builder()
-//                .putString(KEY_TASK_DESC, "Hey I am sending the work data")
-//                .build();
-//
-//        Constraints constraints = new Constraints.Builder()
-//                .setRequiresCharging(true)
-//                .build();
-
-//        final OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MyWorker.class)
-//                .build();
+        //-------------------------------------
         PeriodicWorkRequest request =
                 new PeriodicWorkRequest.Builder(MyWorker.class, 16, TimeUnit.MINUTES)
                         .build();
@@ -76,11 +68,23 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
         Button btChk1 = findViewById(R.id.btChk1);
         btChk1.setOnClickListener(view -> {
-            checkClass.chk();
+            checkClass chk = new checkClass(MainActivity.this);
+            checkClass.chk2();
+
         });
 
     }
+//    public void chk2(){
+//        Storage sto = new Storage();
+//        JSONObject jsonData = null;
+//        for (int i = 0; i < sto.users.size(); i++) {
+//            Log.i("users- ", sto.users.get(i));
+//
+//            asyncReqClass reqtask = new asyncReqClass(MainActivity.this);
+//            reqtask.execute(sto.users.get(i));
+//
+//        }
+//    }
 }
