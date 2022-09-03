@@ -1,6 +1,9 @@
 package com.example.leetcode_api_request;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.Observer;
 import androidx.work.Data;
 import androidx.work.PeriodicWorkRequest;
@@ -21,11 +25,13 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
 //    public static final String KEY_TASK_DESC = "key_task_desc";
+    public static final String ch1Id = "channel1";
 
     public static Context c;
     public static Context getContext(){
         return c;
     }
+    public NotificationManagerCompat notifManager;
 
 //    private Button btChk1 ;
 
@@ -34,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         c = getApplicationContext();
+        createNotifChannel();
+        notifManager = NotificationManagerCompat.from(this);
+
 
         //-------------------------------------
         PeriodicWorkRequest request =
@@ -75,33 +84,41 @@ public class MainActivity extends AppCompatActivity {
             checkClass.chk2();
 
         });
-        Button btSave = findViewById(R.id.btSave);
-        btSave.setOnClickListener(new View.OnClickListener() {
+        Button btChk2 = findViewById(R.id.btChk2);
+        btChk2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkClass chk = new checkClass(MainActivity.this);
-                String userInp = "pete1302";
-                try {
-                    checkClass.chk3(userInp);
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                getUserUpdate updt = new getUserUpdate(MainActivity.this);
+                updt.execute("pete1302");
+            }
+        });
+        Button btSave = findViewById(R.id.btSave);
+        btSave.setOnClickListener(view -> {
+            checkClass chk = new checkClass(MainActivity.this);
+            String userInp = "pete1302";
+            try {
+                checkClass.chk3(userInp);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         });
 
 
     }
-//    public void chk2(){
-//        Storage sto = new Storage();
-//        JSONObject jsonData = null;
-//        for (int i = 0; i < sto.users.size(); i++) {
-//            Log.i("users- ", sto.users.get(i));
-//
-//            asyncReqClass reqtask = new asyncReqClass(MainActivity.this);
-//            reqtask.execute(sto.users.get(i));
-//
-//        }
-//    }
+    private void createNotifChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel1 = new NotificationChannel(
+                    ch1Id,
+                    "ch 1",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel1.setDescription("CHANNEL 1");
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel1);
+        }
+    }
+
 }
