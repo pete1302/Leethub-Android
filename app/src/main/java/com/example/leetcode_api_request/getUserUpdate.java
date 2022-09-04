@@ -20,6 +20,7 @@ import okhttp3.Response;
 public class getUserUpdate extends AsyncTask<String , Void , String> {
 
     private static WeakReference weakRef;
+    private static String userName;
 
     getUserUpdate(MainActivity activity) {
         weakRef = new WeakReference<MainActivity>(activity);
@@ -33,6 +34,7 @@ public class getUserUpdate extends AsyncTask<String , Void , String> {
         if( activity ==null || activity.isFinishing()){
             return;
         }
+
     }
 
     @Override
@@ -40,7 +42,6 @@ public class getUserUpdate extends AsyncTask<String , Void , String> {
 
         String userName = "pete1302";
 //        userName = strings[0];
-
 
         final String[] res = new String[1];
 //            Log.i(TAG, strings[0]);
