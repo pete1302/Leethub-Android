@@ -12,7 +12,11 @@ import java.lang.ref.WeakReference;
 public class jobShed extends JobService {
 
     private static WeakReference weakRef;
-    public static final boolean sts = false;
+    public static  boolean sts = false;
+
+    public jobShed(){
+
+    }
 
     public jobShed(MainActivity activity){
         weakRef = new WeakReference<>(activity);
@@ -39,16 +43,45 @@ public class jobShed extends JobService {
         return true;
     }
     private static void bgWork(){
+        Log.d(TAG, "bgWork: BG WORK START ___ ");
         MainActivity activity = (MainActivity) weakRef.get();
-        for (int i = 0; i < Storage.users.size(); i++) {
-            if(sts){
-                return;
-            }
-            getUserUpdate getUpdt = new getUserUpdate(activity);
-            if(Storage.users.get(0) != null){
-                getUpdt.execute(Storage.users.get(i));
-            }
-        }
+        getUserUpdate getUpdt = new getUserUpdate(activity);
+//        new Storage();
+//        for (int i = 0; i < Storage.users.size(); i++) {
+//            if(sts){
+//                Log.d(TAG, "bgWork: STS TRUE!!!!");
+//                return;
+//            }
+//            else if(Storage.users.get(0) != null){
+//                Log.d(TAG, "bgWork: ON EXE");
+//                getUpdt.execute(Storage.users.get(i));
+//            }else{
+//                Log.d(TAG, "bgWork: STORAGE EMPTY");
+//            }
+//        }
+        getUpdt.execute("pete1302");
     }
+//    public void startJob(){
+//        MainActivity activity = (MainActivity) weakRef.get();
+//        ComponentName cn = new ComponentName(activity , jobShed.class);
+//        JobInfo jInfo = new JobInfo.Builder( 1,cn )
+//                .build();
+//
+//        JobScheduler scheduler = (JobScheduler) activity.getSystemService(JOB_SCHEDULER_SERVICE);
+//        int schedRes = scheduler.schedule(jInfo);
+//        if(schedRes == JobScheduler.RESULT_SUCCESS){
+//            Log.d(TAG, "startJob: ");
+//        }else{
+//            Log.d(TAG, "startJob: ");
+//        }
+//
+//    }
+//
+//    public void cancleJob(){
+//        MainActivity activity = (MainActivity) weakRef.get();
+//        JobScheduler jSched = (JobScheduler) activity.getSystemService(JOB_SCHEDULER_SERVICE);
+//        jSched.cancel(1);
+//        Log.d(TAG, "cancleJob: CANCELLED");
+//    }
 
 }

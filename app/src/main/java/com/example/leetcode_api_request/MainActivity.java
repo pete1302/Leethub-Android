@@ -2,9 +2,13 @@ package com.example.leetcode_api_request;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
 //    public static final String KEY_TASK_DESC = "key_task_desc";
     public static final String ch1Id = "channel1";
+    private static final String TAG = "MAINACTIVITY";
 
     public static Context c;
     public static Context getContext(){
@@ -92,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 updt.execute("pete1302");
             }
         });
-        Button btSave = findViewById(R.id.btSave);
+        Button btSave = findViewById(R.id.btJobStart);
         btSave.setOnClickListener(view -> {
             checkClass chk = new checkClass(MainActivity.this);
             String userInp = "pete1302";
@@ -105,7 +110,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //----------------
+        new jobShed(MainActivity.this);
 
+        Button btJobStart = findViewById(R.id.btJobStart);
+        btJobStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                jobShed js = new jobShed(MainActivity.this);
+//                js.startJob();
+
+                startJob();
+            }
+        });
+
+        Button btJobEnd = findViewById(R.id.btJobEnd);
+        btJobEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                jobShed js = new jobShed(MainActivity.this);
+//                js.cancleJob();
+                cancleJob();
+            }
+        });
+
+    }
+    public void startJob(){
+//        MainActivity activity = (MainActivity) weakRef.get();
+        ComponentName cn = new ComponentName(this , jobShed.class);
+        JobInfo jInfo = new JobInfo.Builder( 1,cn )
+                .build();
+
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int schedRes = scheduler.schedule(jInfo);
+        if(schedRes == JobScheduler.RESULT_SUCCESS){
+            Log.d(TAG, "startJob: ");
+        }else{
+            Log.d(TAG, "startJob: ");
+        }
+
+    }
+
+    public void cancleJob(){
+//        MainActivity activity = (MainActivity) weakRef.get();
+        JobScheduler jSched = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        jSched.cancel(1);
+        Log.d(TAG, "cancleJob: CANCELLED");
     }
     private void createNotifChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -120,5 +170,7 @@ public class MainActivity extends AppCompatActivity {
             manager.createNotificationChannel(channel1);
         }
     }
+
+
 
 }
