@@ -45,7 +45,7 @@ public class checkClass {
                 e.printStackTrace();
             }
             if (jsonData.has("errors")) {
-                Log.e( "ERROR", "error in data'");
+                Log.e( "ERROR", "error in data");
 
             }
         }

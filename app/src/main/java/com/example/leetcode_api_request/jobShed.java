@@ -28,11 +28,13 @@ public class jobShed extends JobService {
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
         Log.d(TAG, "onStartJob: START");
-        bgWork();
+//        bgWork();
+        bgWork2(jobParameters);
         jobFinished(jobParameters , false);
         Log.d(TAG, "onStartJob: END");
         return true;
     }
+
 
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
@@ -60,6 +62,24 @@ public class jobShed extends JobService {
 //            }
 //        }
         getUpdt.execute("pete1302");
+    }
+    void bgWork2(JobParameters params){
+        Log.d(TAG, "bgWork2: START");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10; i++) {
+                    Log.d(TAG, "run: STEP" + i);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+//                jobFinished(params , false);
+            }
+        }).start();
+        Log.d(TAG, "bgWork2: END");
     }
 //    public void startJob(){
 //        MainActivity activity = (MainActivity) weakRef.get();

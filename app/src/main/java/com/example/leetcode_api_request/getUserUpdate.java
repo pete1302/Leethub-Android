@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,6 +22,7 @@ public class getUserUpdate extends AsyncTask<String , Void , String> {
 
     private static WeakReference weakRef;
     private static String userName;
+    private static ArrayList<String> statusList ;
 
     getUserUpdate(MainActivity activity) {
         weakRef = new WeakReference<MainActivity>(activity);
@@ -78,7 +80,9 @@ public class getUserUpdate extends AsyncTask<String , Void , String> {
         }
         if(jsonData.has("errors")){
             Log.e(TAG, "onPostExecute: ERROR IN JSON");
+            statusList.add("error");
         }else{
+
             try {
                 getTime(jsonData);
             } catch (JSONException e) {
@@ -121,6 +125,7 @@ public class getUserUpdate extends AsyncTask<String , Void , String> {
                 return true;
             }else{
                 Log.i(TAG, "getTime: NAYYYYYYYYYYYYYYYYY");
+                statusList.add(time.toString());
                 return false;
             }
         }else {
@@ -128,6 +133,29 @@ public class getUserUpdate extends AsyncTask<String , Void , String> {
             return false;
         }
     }
+
+    public static void pipeLine(MainActivity activity){
+        Log.d(TAG, "pipeLine: START");
+
+        new Storage();
+        getUserUpdate getter = new getUserUpdate(activity);
+//        MainActivity activity = (MainActivity) weakRef.get();
+        for (int i = 0; i <Storage.users.size() ; i++) {
+
+            Log.d(TAG, "pipeLine: "+ Storage.users.get(i));
+//            getter.execute(Storage.users.get(i));
+
+
+        }
+        getter.execute("pete1302");
+        Log.d(TAG, "pipeLine: UPDATED ENDED");
+        for (int i = 0; i < statusList.size(); i++) {
+            Log.d(TAG, "pipeLine: "+ statusList.get(i));
+        }
+        Log.d(TAG, "pipeLine: END");
+
+    }
+
 
 
 }

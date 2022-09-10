@@ -17,6 +17,7 @@ public class Storage {
         public static ArrayList<String> users = new ArrayList<>();
 
         public Storage(){
+                // 1662843965 dummy epoch
                 users.add("votrubac");
                 users.add("pete1302");
 //                MainActivity act = (MainActivity) weakRef.get();
@@ -61,6 +62,12 @@ public class Storage {
                 edit.remove("USERLIST");
                 edit.putString("USERLIST" , data);
                 edit.commit();
+        }
+        public static Long getUserSub(String userName){
+
+
+
+                return null;
         }
 
 

@@ -85,8 +85,10 @@ public class MainActivity extends AppCompatActivity {
 
         Button btChk1 = findViewById(R.id.btChk1);
         btChk1.setOnClickListener(view -> {
-            checkClass chk = new checkClass(MainActivity.this);
-            checkClass.chk2();
+//            checkClass chk = new checkClass(MainActivity.this);
+//            checkClass.chk2();
+//            getUserUpdate.pipeLine(MainActivity.this);
+            new asyncUpdate().execute();
 
         });
         Button btChk2 = findViewById(R.id.btChk2);
