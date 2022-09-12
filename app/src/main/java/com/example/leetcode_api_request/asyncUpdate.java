@@ -78,12 +78,11 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
         super.onPostExecute(hashMap);
 
         HashMap timeList  = parser(hashMap);
-
+        notifClass.notifListParse(chkSubmission(timeList));
 
         Log.d(TAG, "onPostExecute: END");
         
     }
-
     private static String queryGen(String username, String qid){
 
         String baseUrl =
@@ -126,7 +125,6 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
                 }
             }
             it.remove();
-
         }
         return timeList;
 
@@ -181,10 +179,10 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
         }
         return time;
     }
-    private static HashMap chkSubmission(HashMap<String , Log> timeList){
+    private static HashMap chkSubmission(HashMap<String , String> timeList){
 
         Iterator it = timeList.entrySet().iterator();
-        HashMap<String , String > notifList = new HashMap<>();
+        HashMap<String , Boolean > notifList = new HashMap<>();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             Log.d(TAG, "onPostExecute: " + (pair.getKey() + " = " + pair.getValue()));
@@ -194,7 +192,7 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
             if( subTime != 0) {
                 if( currSub != 0){
                     if( subTime < currSub){
-                        notifList.put(userName , "Y");
+                        notifList.put(userName , true);
                     }
                 }
             }else{
@@ -203,6 +201,7 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
             it.remove();
         }
         return notifList;
+
     }
 
 

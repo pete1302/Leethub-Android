@@ -16,14 +16,25 @@ public class Storage {
         static ArrayAdapter<String> arrAdpt;
         public static ArrayList<String> users = new ArrayList<>();
 
+        public static ArrayList<CustPair<String , Integer>> users2 = new ArrayList<>();
+
+
         public Storage(){
                 // 1662843965 dummy epoch
                 users.add("votrubac");
                 users.add("pete1302");
+
+                CustPair<String , Integer> pair = new CustPair<>("pete1302", 1662843965);
+                CustPair<String , Integer> pair2 = new CustPair<>("pete1302", 1662843965);
+
+                users2.add(pair);
+                users2.add(pair2);
+
 //                MainActivity act = (MainActivity) weakRef.get();
                 sp = MainActivity.getContext().getSharedPreferences("spUser", Context.MODE_PRIVATE);
 //                arrAdpt = new ArrayAdapter<String>();
-                loadData();
+//                loadData();
+
         }
 
         public static void saveData(String userName){
@@ -64,8 +75,6 @@ public class Storage {
                 edit.commit();
         }
         public static Long getUserSub(String userName){
-
-
 
                 return null;
         }

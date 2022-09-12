@@ -2,15 +2,20 @@ package com.example.leetcode_api_request;
 
 
 import android.app.Notification;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class notifClass {
 
+    private static final String TAG = "notifClass";
     private static NotificationManagerCompat notifManager ;
     private final static AtomicInteger c = new AtomicInteger(0);
 
@@ -42,6 +47,21 @@ public class notifClass {
                 getID(),
                 notif
         );
+    }
+    public static void notifListParse(HashMap<String ,Boolean> notifList){
+
+        Log.d(TAG, "notifListParse: START");
+        Iterator it = notifList.entrySet().iterator();
+        while( it.hasNext()){
+
+            Map.Entry pair = (Map.Entry) it.next();
+            if (pair.getValue().equals(true)) {
+                String userName = pair.getKey().toString();
+                sendNotif(userName , "DESCRIPTION");
+            }
+            it.remove();
+        }
+        Log.d(TAG, "notifListParse: END");
     }
 
     private static int getID() {
