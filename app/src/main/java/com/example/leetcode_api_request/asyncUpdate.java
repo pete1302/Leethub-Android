@@ -78,11 +78,15 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
         super.onPostExecute(hashMap);
 
         HashMap timeList  = parser(hashMap);
+
         notifClass.notifListParse(chkSubmission(timeList));
 
         Log.d(TAG, "onPostExecute: END");
         
     }
+
+    //------------------//------------------//------------------//------------------
+
     private static String queryGen(String username, String qid){
 
         String baseUrl =
@@ -92,6 +96,7 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
         return baseUrl;
     }
     private static HashMap parser(HashMap<String,String> userStat){
+
 
         HashMap<String , Long> timeList = new HashMap<>();
 
@@ -114,7 +119,6 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
                     flg = getTime(jsonData);
                 } catch (JSONException e) {
                     e.printStackTrace();
-
                 }
             }
             if( flg ){
@@ -129,36 +133,39 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
         return timeList;
 
     }
+
+
     private static boolean getTime(JSONObject jsonData) throws JSONException {
 
-        Long time = null;
-        long epoch = System.currentTimeMillis()/1000;
-        if(jsonData.has("data")){
-            JSONObject data = (JSONObject) jsonData.getJSONObject("data");
-            if( data.has("recentAcSubmissionList")){
-                JSONArray arr = data.getJSONArray("recentAcSubmissionList");
-                if( arr.length() == 1 ){
-                    JSONObject ele = (JSONObject) arr.get(0);
-                    if( ele.has("timestamp")){
-                        time = ele.getLong("timestamp");
-                    }
-                }
-            }
-        }
-        Log.i(TAG, "getTime: "+ epoch + "--" + time);
-        if( time != null){
-            if(time > epoch){
-                Log.i(TAG, "getTime: DONE SOMETHING $$$$");
-                return true;
-            }else{
-                Log.i(TAG, "getTime: NAYYYYYYYYYYYYYYYYY");
-//                statusList.add(time.toString());
-                return false;
-            }
-        }else {
-            Log.e(TAG, "getTime: ERROR time => NULL");
-            return false;
-        }
+        return true;
+//        Long time = null;
+//        long epoch = System.currentTimeMillis()/1000;
+//        if(jsonData.has("data")){
+//            JSONObject data = (JSONObject) jsonData.getJSONObject("data");
+//            if( data.has("recentAcSubmissionList")){
+//                JSONArray arr = data.getJSONArray("recentAcSubmissionList");
+//                if( arr.length() == 1 ){
+//                    JSONObject ele = (JSONObject) arr.get(0);
+//                    if( ele.has("timestamp")){
+//                        time = ele.getLong("timestamp");
+//                    }
+//                }
+//            }
+//        }
+//        Log.i(TAG, "getTime: "+ epoch + "--" + time);
+//        if( time != null){
+//            if(time > epoch){
+//                Log.i(TAG, "getTime: DONE SOMETHING $$$$");
+//                return true;
+//            }else{
+//                Log.i(TAG, "getTime: NAYYYYYYYYYYYYYYYYY");
+////                statusList.add(time.toString());
+//                return false;
+//            }
+//        }else {
+//            Log.e(TAG, "getTime: ERROR time => NULL");
+//            return false;
+//        }
     }
 
     private static Long getTime2(JSONObject jsonData) throws JSONException {
@@ -192,20 +199,17 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
             if( subTime != 0) {
                 if( currSub != 0){
                     if( subTime < currSub){
+                        Log.d(TAG, "chkSubmission: TRUE -> "+ userName);
                         notifList.put(userName , true);
                     }
                 }
             }else{
-
+                Log.e(TAG, "chkSubmission: ERROR IN TIME COMPARISON"+ subTime + ' '+ currSub);
             }
             it.remove();
         }
         return notifList;
 
     }
-
-
-
-
 
 }

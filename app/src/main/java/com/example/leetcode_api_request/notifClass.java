@@ -8,6 +8,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -57,11 +58,23 @@ public class notifClass {
             Map.Entry pair = (Map.Entry) it.next();
             if (pair.getValue().equals(true)) {
                 String userName = pair.getKey().toString();
+                Log.d(TAG, "notifListParse: NOTIF QUEUED -> " + userName);
                 sendNotif(userName , "DESCRIPTION");
             }
             it.remove();
         }
         Log.d(TAG, "notifListParse: END");
+    }
+
+    public static void notifChk(){
+        new Storage();
+        ArrayList<String> users = Storage.users;
+        for (int i = 0; i < users.size(); i++) {
+            Log.d(TAG, "notifChk: ");
+            String userName = users.get(i);
+            sendNotif(userName , "DUMMY " + getID());
+
+        }
     }
 
     private static int getID() {

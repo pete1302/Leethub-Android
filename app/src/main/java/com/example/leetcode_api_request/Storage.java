@@ -76,7 +76,14 @@ public class Storage {
         }
         public static Long getUserSub(String userName){
 
-                return null;
+                for (int i = 0; i < Storage.users2.size(); i++) {
+
+                        String user = Storage.users2.get(i).getL();
+                        if(user.equals(userName)){
+                                return Storage.users2.get(i).getR().longValue();
+                        }
+                }
+                return 0L;
         }
 
 
