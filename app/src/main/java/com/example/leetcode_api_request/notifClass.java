@@ -67,7 +67,7 @@ public class notifClass {
     }
 
     public static void notifChk(){
-        new Storage();
+//        new Storage();
         ArrayList<String> users = Storage.users;
         for (int i = 0; i < users.size(); i++) {
             Log.d(TAG, "notifChk: ");

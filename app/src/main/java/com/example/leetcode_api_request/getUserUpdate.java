@@ -25,7 +25,7 @@ public class getUserUpdate extends AsyncTask<String , Void , String> {
     private static ArrayList<String> statusList ;
 
     getUserUpdate(MainActivity activity) {
-        weakRef = new WeakReference<MainActivity>(activity);
+        weakRef = new WeakReference<>(activity);
     }
     //------------
     @Override
@@ -137,7 +137,7 @@ public class getUserUpdate extends AsyncTask<String , Void , String> {
     public static void pipeLine(MainActivity activity){
         Log.d(TAG, "pipeLine: START");
 
-        new Storage();
+//        new Storage();
         getUserUpdate getter = new getUserUpdate(activity);
 //        MainActivity activity = (MainActivity) weakRef.get();
         for (int i = 0; i <Storage.users.size() ; i++) {

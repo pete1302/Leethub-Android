@@ -69,13 +69,12 @@ public class getUserClass extends AsyncTask<String, Void , String> {
 
     }
 
-
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
         if(chkData(s) && !Storage.chkExist(userName)){
-            Storage.saveData(userName);
+            Storage.saveData2(userName);
         }
         MainActivity activity = (MainActivity) weakRef.get();
         Toast.makeText(activity, "SAVED -----> " + userName, Toast.LENGTH_LONG).show();
@@ -85,11 +84,7 @@ public class getUserClass extends AsyncTask<String, Void , String> {
 //        }else{
 //            Log.e(TAG, "onPostExecute: NOI");
 //        }
-
     }
-
-
-
     //------------------------//------------------------//------------------------
 
     private static boolean chkData(String s){

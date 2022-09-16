@@ -3,9 +3,6 @@ package com.example.leetcode_api_request;
 import android.os.Looper;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.ExecutionException;
@@ -29,45 +26,46 @@ public class checkClass {
         weakRef = new WeakReference<>(activity);
     }
 
-    public static void chk() {
-        Storage sto = new Storage();
-        JSONObject jsonData = null;
+//    public static void chk() {
+////        Storage sto = new Storage();
+//        JSONObject jsonData = null;
+//
+//        for (int i = 0; i < sto.users.size(); i++) {
+//            Log.i("users- ", sto.users.get(i));
+//            String strData = chkValidUser(sto.users.get(i));
+//            if( strData == null ){
+//                strData = "{\"errors\":\"null\"}";
+//            }
+//            try {
+//                jsonData = new JSONObject(strData);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            if (jsonData.has("errors")) {
+//                Log.e( "ERROR", "error in data");
+//
+//            }
+//        }
+//    }
 
-        for (int i = 0; i < sto.users.size(); i++) {
-            Log.i("users- ", sto.users.get(i));
-            String strData = chkValidUser(sto.users.get(i));
-            if( strData == null ){
-                strData = "{\"errors\":\"null\"}";
-            }
-            try {
-                jsonData = new JSONObject(strData);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            if (jsonData.has("errors")) {
-                Log.e( "ERROR", "error in data");
-
-            }
-        }
-    }
-
-    public static void chk2(){
-
-        MainActivity activity = (MainActivity) weakRef.get();
-        if( activity == null || activity.isFinishing()){
-            return;
-        }
-        Storage sto = new Storage();
-        JSONObject jsonData = null;
-        for (int i = 0; i < sto.users.size(); i++) {
-            Log.i("users- ", sto.users.get(i));
-//            asyncReqClass reqtask = new asyncReqClass(activity);
-//            asyncReqClass(activity).exe
-//            reqtask.execute(sto.users.get(i));
+//    public static void chk2(){
+//
+//        MainActivity activity = (MainActivity) weakRef.get();
+//        if( activity == null || activity.isFinishing()){
+//            return;
+//        }
+////        Storage sto = new Storage();
+//        JSONObject jsonData = null;
+//        for (int i = 0; i < sto.users.size(); i++) {
+//            Log.i("users- ", sto.users.get(i));
+////            asyncReqClass reqtask = new asyncReqClass(activity);
+////            asyncReqClass(activity).exe
+////            reqtask.execute(sto.users.get(i));
+//
+//
+//        }
 
 
-        }
-    }
 
     public static void chk3(String userName) throws ExecutionException, InterruptedException {
 

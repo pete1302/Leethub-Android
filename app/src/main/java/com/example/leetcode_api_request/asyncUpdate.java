@@ -33,7 +33,7 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
 //        if( activity ==null || activity.isFinishing()){
 //            return;
 //        }
-        new Storage();
+//        new Storage();
         users = Storage.users;
     }
 

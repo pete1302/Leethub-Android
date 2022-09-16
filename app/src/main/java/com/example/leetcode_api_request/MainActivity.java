@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                });
 
+        new Storage(MainActivity.this);
+
         Button btChk1 = findViewById(R.id.btChk1);
         btChk1.setOnClickListener(view -> {
             checkClass chk = new checkClass(MainActivity.this);
@@ -130,8 +132,10 @@ public class MainActivity extends AppCompatActivity {
                 cancleJob();
             }
         });
-
     }
+
+    //-----------------------------------------------------------------------------
+
     public void startJob(){
 //        MainActivity activity = (MainActivity) weakRef.get();
         ComponentName cn = new ComponentName(this , jobShed.class);

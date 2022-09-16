@@ -37,7 +37,6 @@ public class asyncGetUser extends AsyncTask<Void , Void , String> {
     @Override
     protected String doInBackground(Void... voids) {
 
-
         final String[] res = new String[1];
 //            Log.i(TAG, strings[0]);
         OkHttpClient client = new OkHttpClient();
