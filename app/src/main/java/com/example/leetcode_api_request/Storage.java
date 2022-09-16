@@ -1,8 +1,12 @@
 package com.example.leetcode_api_request;
 
 import android.content.SharedPreferences;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -11,7 +15,8 @@ import java.util.ArrayList;
 public class Storage {
 
 
-//        static Context context = MainActivity.getContext();
+        private static final String TAG ="STORAGE" ;
+        //        static Context context = MainActivity.getContext();
         WeakReference weakRef;
         static SharedPreferences sp = null;
         static ArrayAdapter<String> arrAdpt;
@@ -42,6 +47,16 @@ public class Storage {
                 lvUsers.setAdapter(adapt);
 //                lvUsers.setAdapter(adapt2);
 
+                lvUsers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                String toast_text = adapterView.getItemAtPosition(i).toString();
+                                Toast.makeText(act, toast_text + " DELETED", Toast.LENGTH_SHORT).show();
+                                users2.remove(i);
+                                adapt.notifyDataSetChanged();
+                                return true;
+                        }
+                });
         }
 
         public static void saveData(String userName){
@@ -99,9 +114,14 @@ public class Storage {
         }
 
         public static void updateTime(String userName , Long time) {
+                if (time.equals(null) || time.equals(0)){
+                        time = (System.currentTimeMillis() / 1000);
+                }
                 for (int i = 0; i < users2.size() ; i++) {
                         if(users2.get(i).getL() == userName){
                                 users2.get(i).setR(time.intValue());
+                                Log.d(TAG, "updateTime: "+ users2.get(i).getL() + " "
+                                + users2.get(i).getR());
                         }
                 }
         }

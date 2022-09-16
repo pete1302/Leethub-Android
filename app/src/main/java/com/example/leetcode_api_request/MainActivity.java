@@ -8,7 +8,6 @@ import android.content.ComponentName;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -46,11 +45,8 @@ public class MainActivity extends AppCompatActivity {
 //                new PeriodicWorkRequest.Builder(MyWorker.class, 16, TimeUnit.MINUTES)
 //                        .build();
 
-        findViewById(R.id.workerButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        findViewById(R.id.workerButton).setOnClickListener(view -> {
 //                WorkManager.getInstance().enqueue(request);
-            }
         });
 
         final TextView textView = findViewById(R.id.tvWorker);
@@ -98,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         Button btSave = findViewById(R.id.btJobStart);
         btSave.setOnClickListener(view -> {
             checkClass chk = new checkClass(MainActivity.this);
+
             String userInp = "pete1302";
             try {
                 checkClass.chk3(userInp);
@@ -113,24 +110,18 @@ public class MainActivity extends AppCompatActivity {
         new jobShed(MainActivity.this);
 
         Button btJobStart = findViewById(R.id.btJobStart);
-        btJobStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btJobStart.setOnClickListener(view -> {
 //                jobShed js = new jobShed(MainActivity.this);
 //                js.startJob();
-
-                startJob();
-            }
+            new notifClass(MainActivity.this);
+            startJob();
         });
 
         Button btJobEnd = findViewById(R.id.btJobEnd);
-        btJobEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btJobEnd.setOnClickListener(view -> {
 //                jobShed js = new jobShed(MainActivity.this);
 //                js.cancleJob();
-                cancleJob();
-            }
+            cancleJob();
         });
     }
 
@@ -140,14 +131,15 @@ public class MainActivity extends AppCompatActivity {
 //        MainActivity activity = (MainActivity) weakRef.get();
         ComponentName cn = new ComponentName(this , jobShed.class);
         JobInfo jInfo = new JobInfo.Builder( 1,cn )
+                .setPeriodic(15*60*1000)
                 .build();
 
         JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
         int schedRes = scheduler.schedule(jInfo);
         if(schedRes == JobScheduler.RESULT_SUCCESS){
-            Log.d(TAG, "startJob: ");
+            Log.d(TAG, "startJob: SUCCESS");
         }else{
-            Log.d(TAG, "startJob: ");
+            Log.d(TAG, "startJob: FAIL");
         }
 
     }

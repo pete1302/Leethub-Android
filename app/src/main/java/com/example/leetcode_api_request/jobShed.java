@@ -29,12 +29,12 @@ public class jobShed extends JobService {
     public boolean onStartJob(JobParameters jobParameters) {
         Log.d(TAG, "onStartJob: START");
 //        bgWork();
-        bgWork2(jobParameters);
+//        bgWork2(jobParameters);
+        new asyncUpdate().execute();
         jobFinished(jobParameters , false);
         Log.d(TAG, "onStartJob: END");
         return true;
     }
-
 
     @Override
     public boolean onStopJob(JobParameters jobParameters) {

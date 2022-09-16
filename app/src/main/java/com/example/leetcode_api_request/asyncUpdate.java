@@ -202,9 +202,10 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
                         Log.d(TAG, "chkSubmission: TRUE -> "+ userName);
                         notifList.put(userName , true);
                     }
+                    Storage.updateTime(userName , currSub);
                 }
             }else{
-                Log.e(TAG, "chkSubmission: ERROR IN TIME COMPARISON"+ subTime + ' '+ currSub);
+                Log.e(TAG, "chkSubmission: ERROR IN TIME COMPARISON"+ subTime +' '+ currSub);
             }
             it.remove();
         }
