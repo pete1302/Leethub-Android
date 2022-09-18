@@ -9,6 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
@@ -68,10 +70,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button btAdd = findViewById(R.id.btAdd);
+        btAdd.setOnClickListener(view -> {
+            TextView evUserName = findViewById(R.id.evUsername);
+            String userName = evUserName.getText().toString();
+            if(userName.equals(null) || userName.equals("")){
+                Toast.makeText(this, "ENTER VALID USERNAME", Toast.LENGTH_SHORT).show();
+            }else{
+                getUserClass userInstance = new getUserClass(MainActivity.this);
+                userInstance.execute(userName);
+            }
+            
+        });
+
 
         //----------------
         new jobShed(MainActivity.this);
-
         Button btJobStart = findViewById(R.id.btJobStart);
         btJobStart.setOnClickListener(view -> {
             new notifClass(MainActivity.this);

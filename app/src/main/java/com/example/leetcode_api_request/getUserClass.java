@@ -22,7 +22,7 @@ public class getUserClass extends AsyncTask<String, Void , String> {
     private static String userName;
 
     getUserClass(MainActivity activity) {
-        weakRef = new WeakReference<MainActivity>(activity);
+        weakRef = new WeakReference<>(activity);
     }
 
     @Override
@@ -36,7 +36,6 @@ public class getUserClass extends AsyncTask<String, Void , String> {
 //        MainActivity activity = (MainActivity) weakRef.get();
 //        userName = activity.findViewById(R.id.evUsername).get;
         userName ="pete1302";
-
     }
 
     @Override
@@ -62,11 +61,8 @@ public class getUserClass extends AsyncTask<String, Void , String> {
             res[0] = "{\"errors\":\"run: OKHTTP ERR\"}";
 
         }
-
         Log.i(TAG, "run: res " + res[0]);
         return res[0];
-
-
     }
 
     @Override
