@@ -23,7 +23,7 @@ import okhttp3.Response;
 public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
 
     private static WeakReference weakRef;
-    private static ArrayList<String> users ;
+    private static ArrayList<CustPair<String, Integer>> users ;
 
     @Override
     protected void onPreExecute() {
@@ -34,7 +34,7 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
 //            return;
 //        }
 //        new Storage();
-        users = Storage.users;
+        users = Storage.users2;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
         String userName;
         HashMap<String, String> userStat = new HashMap<>();
         for (int i = 0; i < users.size(); i++) {
-            userName = users.get(i);
+            userName = users.get(i).getL();
             Log.d(TAG, "doInBackground: "+ userName);
 
             //----

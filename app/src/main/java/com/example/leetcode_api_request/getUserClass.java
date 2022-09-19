@@ -42,7 +42,7 @@ public class getUserClass extends AsyncTask<String, Void , String> {
     protected String doInBackground(String... strings) {
 
 //        String userName = "pete1302";
-
+        userName = strings[0];
         final String[] res = new String[1];
 //            Log.i(TAG, strings[0]);
         OkHttpClient client = new OkHttpClient();
@@ -59,7 +59,6 @@ public class getUserClass extends AsyncTask<String, Void , String> {
             e.printStackTrace();
             Log.e(TAG, "run: OKHTTP ERR");
             res[0] = "{\"errors\":\"run: OKHTTP ERR\"}";
-
         }
         Log.i(TAG, "run: res " + res[0]);
         return res[0];
@@ -67,9 +66,10 @@ public class getUserClass extends AsyncTask<String, Void , String> {
 
     @Override
     protected void onPostExecute(String s) {
+        Log.d(TAG, "onPostExecute: START" );
         super.onPostExecute(s);
 
-        if(chkData(s) && !Storage.chkExist(userName)){
+        if(chkData(s) && !Storage.chkExist2(userName)){
             Storage.saveData2(userName);
         }
         MainActivity activity = (MainActivity) weakRef.get();

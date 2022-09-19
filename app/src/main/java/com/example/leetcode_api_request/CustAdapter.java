@@ -36,9 +36,16 @@ public class CustAdapter extends ArrayAdapter {
 
         TextView tvName = v.findViewById(R.id.tvName);
         TextView tvTime = v.findViewById(R.id.tvTime);
-        tvName.setText(users.get(position).getL().toString());
+        String data = users.get(position).getL() + " - " + Storage.timeConv(users.get(position).getR().longValue());
+        tvName.setText(data);
+
+//        tvName.setText(users.get(position).getL().toString());
+
+//        tvTime.setText(timeConv(users.get(position).getR().longValue()));
 //        tvTime.setText(users.get(position).getR().toString());
 
         return v;
     }
+
+
 }

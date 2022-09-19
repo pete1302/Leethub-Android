@@ -77,10 +77,11 @@ public class MainActivity extends AppCompatActivity {
             if(userName.equals(null) || userName.equals("")){
                 Toast.makeText(this, "ENTER VALID USERNAME", Toast.LENGTH_SHORT).show();
             }else{
+                Toast.makeText(this, "ADDING "+userName, Toast.LENGTH_SHORT).show();
                 getUserClass userInstance = new getUserClass(MainActivity.this);
                 userInstance.execute(userName);
             }
-            
+
         });
 
 
