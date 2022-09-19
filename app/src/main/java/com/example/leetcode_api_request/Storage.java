@@ -1,5 +1,6 @@
 package com.example.leetcode_api_request;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
@@ -27,19 +28,31 @@ public class Storage {
 
 
         public Storage(MainActivity activity){
-                // 1662843965 dummy epoch
+                // 1662843965 default epoch
 
-                users.add("votrubac");
-                users.add("pete1302");
+//                users.add("votrubac");
+//                users.add("pete1302");
                 weakRef = new WeakReference(activity);
+                MainActivity act = (MainActivity) weakRef.get();
+                sp = act.getSharedPreferences("spUser", Context.MODE_PRIVATE);
+
+
+                if(chkShrPref()){
+                        String userData = sp.getString("User-Data" , null);
+                        if( userData.equals(null) ){
+                                users2 = getDefaultList();
+                        }else{
+//                                users2 = new ArrayList<CustPair<String,Integer>>(userData);
+
+                        }
+
+                }
+
                 CustPair<String , Integer> pair = new CustPair<>("pete1302", 1662843965);
                 CustPair<String , Integer> pair2 = new CustPair<>("votrubac", 1662843965);
-
                 users2.add(pair);
                 users2.add(pair2);
 
-                MainActivity act = (MainActivity) weakRef.get();
-//                sp = MainActivity.getContext().getSharedPreferences("spUser", Context.MODE_PRIVATE);
 //                arrAdpt = new ArrayAdapter<String>();
 //                loadData();
                 ArrayAdapter<String> adapt2 = new ArrayAdapter(act , android.R.layout.simple_list_item_1 , users);
@@ -58,6 +71,18 @@ public class Storage {
                                 return true;
                         }
                 });
+        }
+
+        private ArrayList<CustPair<String, Integer>> getDefaultList() {
+
+                return null;
+        }
+
+        private static boolean chkShrPref(){
+                if(sp.contains("User-Data")){
+                        return true;
+                }
+                return false;
         }
 
         public static void saveData(String userName){
@@ -88,8 +113,8 @@ public class Storage {
 
                 String data = users2.toString();
                 SharedPreferences.Editor edit = sp.edit();
-                edit.remove("USERLIST");
-                edit.putString("USERLIST" , data);
+                edit.remove("User-Data");
+                edit.putString("User-Data" , data);
                 edit.commit();
         }
 
@@ -105,7 +130,7 @@ public class Storage {
 
         public static String loadData(){
                 SharedPreferences.Editor edit = sp.edit();
-                String userList = sp.getString("USERLIST" , "NULL");
+                String userList = sp.getString("User-Data" , "NULL");
                 return userList;
         }
 
