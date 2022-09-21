@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -136,6 +137,12 @@ public class MainActivity extends AppCompatActivity {
             cancleJob();
             Toast.makeText(this, "Notification Cancelled", Toast.LENGTH_SHORT).show();
         });
+        Button btJobChk = findViewById(R.id.btChk2);
+        btJobChk.setOnClickListener(view -> {
+            boolean flg = isJobServiceOn(this);
+            Toast.makeText(this, String.valueOf(flg) , Toast.LENGTH_SHORT).show();
+
+        });
     }
 
     //-----------------------------------------------------------------------------
@@ -143,6 +150,8 @@ public class MainActivity extends AppCompatActivity {
     public void startJob(){
         ComponentName cn = new ComponentName(this , jobShed.class);
         JobInfo jInfo = new JobInfo.Builder( 1,cn )
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setRequiresCharging(false)
                 .setPeriodic(15*60*1000)
                 .build();
 
@@ -172,6 +181,20 @@ public class MainActivity extends AppCompatActivity {
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel1);
         }
+    }
+    public static boolean isJobServiceOn( Context context ) {
+        JobScheduler scheduler = (JobScheduler) context.getSystemService( Context.JOB_SCHEDULER_SERVICE ) ;
+
+        boolean hasBeenScheduled = false ;
+
+        for ( JobInfo jobInfo : scheduler.getAllPendingJobs() ) {
+            if ( jobInfo.getId() == 1 ) {
+                hasBeenScheduled = true ;
+                break ;
+            }
+        }
+
+        return hasBeenScheduled ;
     }
 
 

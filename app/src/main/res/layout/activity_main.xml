@@ -125,4 +125,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btChk1" />
 
+    <Button
+        android:id="@+id/btChk2"
+        android:layout_width="76dp"
+        android:layout_height="55dp"
+        android:text="JOB CHECK "
+        app:layout_constraintBottom_toTopOf="@+id/btAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.877"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.922" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
