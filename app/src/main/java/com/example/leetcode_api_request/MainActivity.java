@@ -15,7 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 //    public static final String KEY_TASK_DESC = "key_task_desc";
     public static final String ch1Id = "channel1";
     private static final String TAG = "MAINACTIVITY";
+    private final static AtomicInteger count = new AtomicInteger(0);
 
     public NotificationManagerCompat notifManager;
 
@@ -48,27 +49,27 @@ public class MainActivity extends AppCompatActivity {
             new asyncUpdate().execute();
 
         });
-        Button btChk2 = findViewById(R.id.btChk2);
-        btChk2.setOnClickListener(view -> {
-//            getUserUpdate updt = new getUserUpdate(MainActivity.this);
-//            updt.execute("pete1302");
-            new notifClass(MainActivity.this);
-            notifClass.notifChk();
-
-        });
-        Button btSave = findViewById(R.id.btJobStart);
-        btSave.setOnClickListener(view -> {
-            checkClass chk = new checkClass(MainActivity.this);
-
-            String userInp = "pete1302";
-            try {
-                checkClass.chk3(userInp);
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
+//        Button btChk2 = findViewById(R.id.btChk2);
+//        btChk2.setOnClickListener(view -> {
+////            getUserUpdate updt = new getUserUpdate(MainActivity.this);
+////            updt.execute("pete1302");
+//            new notifClass(MainActivity.this);
+//            notifClass.notifChk();
+//
+//        });
+//        Button btSave = findViewById(R.id.btAsyncTask);
+//        btSave.setOnClickListener(view -> {
+//            checkClass chk = new checkClass(MainActivity.this);
+//
+//            String userInp = "pete1302";
+//            try {
+//                checkClass.chk3(userInp);
+//            } catch (ExecutionException e) {
+//                e.printStackTrace();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        });
 
         Button btAdd = findViewById(R.id.btAdd);
         btAdd.setOnClickListener(view -> {
@@ -81,21 +82,59 @@ public class MainActivity extends AppCompatActivity {
                 getUserClass userInstance = new getUserClass(MainActivity.this);
                 userInstance.execute(userName);
             }
+        });
+        //----------------
 
+        Button btChk = findViewById(R.id.btChk);
+        btChk.setOnClickListener(view -> {
+            String sCount = String.valueOf(count.incrementAndGet());
+            btChk.setText(sCount);
+        });
+
+        Button btJobTh = findViewById(R.id.btAsyncTask);
+        btJobTh.setOnClickListener(view -> {
+            Toast.makeText(this, "Thread Start", Toast.LENGTH_SHORT).show();
+            new Thread(() -> {
+                for (int i = 0; i < 5; i++) {
+                    Log.d(TAG, "run: STEP" + i);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            Toast.makeText(this, "Thread End", Toast.LENGTH_SHORT).show();
+        });
+
+        Button btUiTh = findViewById(R.id.btUiTask);
+        btUiTh.setOnClickListener(view -> {
+            Toast.makeText(this, "UI Thread Start", Toast.LENGTH_SHORT).show();
+            for (int i = 0; i < 5; i++) {
+                Log.d(TAG, "run: STEP" + i);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            Toast.makeText(this, "UI Thread End", Toast.LENGTH_SHORT).show();
         });
 
 
         //----------------
         new jobShed(MainActivity.this);
-        Button btJobStart = findViewById(R.id.btJobStart);
+        Button btJobStart = findViewById(R.id.btJob);
         btJobStart.setOnClickListener(view -> {
             new notifClass(MainActivity.this);
             startJob();
+            Toast.makeText(this, "Notification Turned On", Toast.LENGTH_SHORT).show();
         });
 
-        Button btJobEnd = findViewById(R.id.btJobEnd);
+        Button btJobEnd = findViewById(R.id.btJobCancel);
         btJobEnd.setOnClickListener(view -> {
             cancleJob();
+            Toast.makeText(this, "Notification Cancelled", Toast.LENGTH_SHORT).show();
         });
     }
 

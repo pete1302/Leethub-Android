@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
@@ -43,15 +46,15 @@ public class Storage {
                                 users2 = getDefaultList();
                         }else{
 //                                users2 = new ArrayList<CustPair<String,Integer>>(userData);
-
+                                users2 = loadShredPref();
                         }
 
                 }
 
-                CustPair<String , Integer> pair = new CustPair<>("pete1302", 1662843965);
-                CustPair<String , Integer> pair2 = new CustPair<>("votrubac", 1662843965);
-                users2.add(pair);
-                users2.add(pair2);
+//                CustPair<String , Integer> pair = new CustPair<>("pete1302", 1662843965);
+//                CustPair<String , Integer> pair2 = new CustPair<>("votrubac", 1662843965);
+//                users2.add(pair);
+//                users2.add(pair2);
 
 //                arrAdpt = new ArrayAdapter<String>();
 //                loadData();
@@ -68,12 +71,32 @@ public class Storage {
                                 Toast.makeText(act, toast_text + " DELETED", Toast.LENGTH_SHORT).show();
                                 users2.remove(i);
                                 adapt.notifyDataSetChanged();
+                                saveToPref();
                                 return true;
                         }
                 });
         }
 
-        private ArrayList<CustPair<String, Integer>> getDefaultList() {
+        private ArrayList<CustPair<String, Integer>> loadShredPref() {
+                String sData =sp.getString("User-Data" , null);
+                if(!sData.equals(null)){
+                        Gson gData = new Gson();
+                        return gData.fromJson(sData , new TypeToken<ArrayList<CustPair<String , Integer>>>(){}.getType());
+                }
+                return null;
+        }
+        private static void saveToPref(){
+                Gson gData = new Gson();
+                String sData = gData.toJson(users2);
+                SharedPreferences.Editor edit = sp.edit();
+                if(sp.contains("User-Data")){
+                        edit.remove("User-Data");
+                }
+                edit.putString("User-Data" , sData);
+                edit.commit();
+        }
+
+        private static ArrayList<CustPair<String, Integer>> getDefaultList() {
 
                 return null;
         }
@@ -84,6 +107,16 @@ public class Storage {
                 }
                 return false;
         }
+//        private static void syncPref(){
+//                Gson gData = new Gson();
+//                String sData = gData.toJson(users2);
+//                SharedPreferences.Editor edit = sp.edit();
+//                if(sp.contains("User-Data")){
+//                        edit.remove("User-Data");
+//                }
+//                edit.putString("User-Data" , sData);
+//                edit.commit();
+//        }
 
         public static void saveData(String userName){
 
@@ -107,6 +140,7 @@ public class Storage {
                 CustPair<String , Integer> userData = new CustPair<>(userName , currEpoch);
                 users2.add(userData);
                 adapt.notifyDataSetChanged();
+                saveToPref();
         }
 
         private static void syncList(){
@@ -153,6 +187,7 @@ public class Storage {
                         }
                 }
                 adapt.notifyDataSetChanged();
+                // TODO: 21-09-2022
         }
 
         public static Long getUserSub(String userName){

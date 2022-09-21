@@ -200,7 +200,8 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
                 if( currSub != 0){
                     if( subTime < currSub){
                         Log.d(TAG, "chkSubmission: TRUE -> "+ userName);
-                        notifList.put(userName , true);
+                        String notifData = userName + " at ->  " + Storage.timeConv(currSub);
+                        notifList.put(notifData , true);
                     }
                     Storage.updateTime(userName , currSub);
                 }
