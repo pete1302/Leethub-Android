@@ -76,6 +76,7 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
     @Override
     protected void onPostExecute(HashMap hashMap) {
         super.onPostExecute(hashMap);
+//        final TextView tvLastChk = MainfindViewById(R.id.tvLastChk);
 
         HashMap timeList  = parser(hashMap);
 

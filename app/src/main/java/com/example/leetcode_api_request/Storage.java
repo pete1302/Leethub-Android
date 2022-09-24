@@ -187,6 +187,7 @@ public class Storage {
                         }
                 }
                 adapt.notifyDataSetChanged();
+                saveToPref();
                 // TODO: 21-09-2022
         }
 

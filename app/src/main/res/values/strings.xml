@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">leetcode_api_request</string>
     <string name="name_prompt">Enter Username</string>
+    <string name="leet_hub">LEET HUB</string>
 </resources>

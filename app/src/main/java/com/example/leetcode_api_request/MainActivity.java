@@ -124,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         //----------------
+//        TextView tvLastChk = findViewById(R.id.tvLastChk);
+
         new jobShed(MainActivity.this);
         Button btJobStart = findViewById(R.id.btJob);
         btJobStart.setOnClickListener(view -> {
