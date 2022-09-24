@@ -69,11 +69,13 @@ public class getUserClass extends AsyncTask<String, Void , String> {
         Log.d(TAG, "onPostExecute: START" );
         super.onPostExecute(s);
 
+        MainActivity activity = (MainActivity) weakRef.get();
         if(chkData(s) && !Storage.chkExist2(userName)){
             Storage.saveData2(userName);
+            Toast.makeText(activity, "SAVED " + userName, Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(activity, "ERROR Invalid User", Toast.LENGTH_SHORT).show();
         }
-        MainActivity activity = (MainActivity) weakRef.get();
-        Toast.makeText(activity, "SAVED -----> " + userName, Toast.LENGTH_LONG).show();
 
 //        if(Storage.saveData(chkData(s))){
 //            Log.e(TAG, "onPostExecute: YOI");

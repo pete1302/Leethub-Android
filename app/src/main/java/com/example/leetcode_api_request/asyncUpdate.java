@@ -25,6 +25,8 @@ public class asyncUpdate extends AsyncTask<Void ,Void , HashMap> {
     private static WeakReference weakRef;
     private static ArrayList<CustPair<String, Integer>> users ;
 
+
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();

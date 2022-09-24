@@ -188,14 +188,12 @@ public class MainActivity extends AppCompatActivity {
         JobScheduler scheduler = (JobScheduler) context.getSystemService( Context.JOB_SCHEDULER_SERVICE ) ;
 
         boolean hasBeenScheduled = false ;
-
         for ( JobInfo jobInfo : scheduler.getAllPendingJobs() ) {
             if ( jobInfo.getId() == 1 ) {
                 hasBeenScheduled = true ;
                 break ;
             }
         }
-
         return hasBeenScheduled ;
     }
 
