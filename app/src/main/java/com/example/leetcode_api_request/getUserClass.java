@@ -61,7 +61,7 @@ public class getUserClass extends AsyncTask<String, Void , String> {
             res[0] = "{\"errors\":\"run: OKHTTP ERR\"}";
         }
         Log.i(TAG, "run: res " + res[0]);
-        return res[0];
+        return res[0];/**/
     }
 
     @Override
